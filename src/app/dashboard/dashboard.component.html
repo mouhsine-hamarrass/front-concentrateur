@@ -1,0 +1,168 @@
+<div class="row">
+  <!-- Pilotage Card Content start-->
+  <div class="col-md-12 col-xl-3">
+    <app-card [cardClass]="'counter-card-1'" [blockClass]="'card-body-big'"> 
+      <div class="row">
+        <div class="col-6 counter-card-icon">
+          <a [routerLink]="['/pilotage']"><img src="assets/images/dashboard/pilotage-icon.png" alt="pilotage icon" style="width: 50px; height: 50px;"></a>
+        </div>
+        <div class="col-6  text-right">
+          <div class="counter-card-text">
+            <h3>Pilotage</h3>
+          </div> 
+        </div>
+      </div>
+    </app-card>
+  </div>
+  <!-- Pilotage Card Content End-->
+
+  <!-- Consultation Card Content Start -->
+  <div class="col-md-6 col-xl-3">
+    <app-card [cardClass]="'counter-card-2'" [blockClass]="'card-body-big'">
+      <div class="row">
+        <div class="col-3 counter-card-icon">
+          <a [routerLink]="['/supervision']"><img src="assets/images/dashboard/consultation-icon.png" alt="consultation icon" style="width: 50px; height: 50px;"></a>
+        </div>
+        <div class="col-9 text-right">
+          <div class="counter-card-text">
+            <h3>Supervision</h3>
+          </div>
+        </div>
+      </div>
+    </app-card>
+  </div>
+  <!-- Consultation Card Content end -->
+
+   <!-- Paramettrage Card Content start -->
+   <div class="col-md-6 col-xl-3">
+    <app-card [cardClass]="'counter-card-3'" [blockClass]="'card-body-big'">
+      <div class="row">
+        <div class="col-3 counter-card-icon">
+          <a [routerLink]="['/parametrage/alert-mail']"><img src="assets/images/dashboard/paramettrage-icon.png" alt="paramettrage-icon" style="width: 50px; height: 50px;"></a>
+        </div>
+        <div class="col-9 text-right">
+          <div class="counter-card-text">
+            <h3>Paramettrage</h3>
+          </div>
+        </div>
+      </div>
+    </app-card>
+  </div>
+  <!-- Paramettrage Card Content end -->
+
+  <!-- TFJ Card Content start -->
+  <div class="col-md-6 col-xl-3">
+    <app-card [cardClass]="'counter-card-3'" [blockClass]="'card-body-big'">
+      <div class="row">
+        <div class="col-3 counter-card-icon">
+          <a [routerLink]="['/TFJ']"><img src="assets/images/dashboard/traitement-fin-journee.png" alt="TJF icon" style="width: 50px; height: 50px;"></a>
+        </div>
+        <div class="col-9 text-right">
+          <div class="counter-card-text">
+            <h3>Traitement Fin Journée</h3>
+          </div>
+        </div>
+      </div>
+    </app-card>
+  </div>
+  <!-- TFJ Card Content end -->
+
+  <!-- Offre Card Content start-->
+  <div class="col-md-12 col-xl-3">
+    <app-card [cardClass]="'counter-card-1'" [blockClass]="'card-body-big'"> 
+      <div class="row">
+        <div class="col-6 counter-card-icon">
+          <a [routerLink]="['/offre/page-principale']"><img src="assets/images/dashboard/offre-icon.png" alt="pilotage icon" style="width: 50px; height: 50px;"></a>
+        </div>
+        <div class="col-6  text-right">
+          <div class="counter-card-text">
+            <h3>Offre</h3>
+          </div>
+        </div>
+      </div>
+    </app-card>
+  </div>
+  <!-- Offre Card Content End-->
+
+  <!-- Gesrion PDV Card Content Start -->
+  <div class="col-md-6 col-xl-3">
+    <app-card [cardClass]="'counter-card-2'" [blockClass]="'card-body-big'">
+      <div class="row">
+        <div class="col-3 counter-card-icon">
+          <a [routerLink]="['/pdv/point-de-vente']"><img src="assets/images/dashboard/gestion-pdv.png" alt="consultation icon" style="width: 50px; height: 50px;"></a>
+        </div>
+        <div class="col-9 text-right">
+          <div class="counter-card-text">
+            <h3>Gestion PDV</h3>
+          </div>
+        </div>
+      </div>
+    </app-card>
+  </div>
+  <!-- Gestion PDV Card Content end -->
+
+   <!-- Communication Card Content start -->
+   <div class="col-md-6 col-xl-3">
+    <app-card [cardClass]="'counter-card-3'" [blockClass]="'card-body-big'">
+      <div class="row">
+        <div class="col-3 counter-card-icon">
+          <a [routerLink]="['/communication/message-ticket']"><img src="assets/images/dashboard/communication-icon.png" alt="paramettrage-icon" style="width: 50px; height: 50px;"></a>
+        </div>
+        <div class="col-9 text-right">
+          <div class="counter-card-text">
+            <h3>Communication</h3>
+          </div>
+        </div>
+      </div>
+    </app-card>
+  </div>
+  <!-- Communication Card Content end -->
+
+  <!-- Alerte table Start -->
+  <div class="col-md-12 col-lg-12">
+    <div class="card">
+      <div class="card-body">
+        <h5>Alertes</h5>
+      </div>
+      <div class="card-body product-table p-t-35">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+            <tr class="text-uppercase">
+              <th>N°</th>
+              <th>Code</th>
+              <th>Statut</th>
+              <th>Description</th>
+              <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td>1.</td>
+              <td>205</td>
+              <td><button type="button" class="btn btn-primary">Encours</button></td>
+              <td>Lancement des ventes R9C1 14/05/2020</td>
+              <td><button type="button" class="btn btn-success btn-round btn-outline-success">Visualisation</button></td>
+            </tr>
+            <tr>
+              <td>2.</td>
+              <td>200</td>
+              <td><button type="button" class="btn btn-primary">Encours</button></td>
+              <td>Arrvée définitive R8C1 14/05/2020</td>
+              <td><button type="button" class="btn btn-success btn-round btn-outline-success">Visualisation</button></td>
+            </tr>
+            <tr>
+              <td>3.</td>
+              <td>200</td>
+              <td><button type="button" class="btn btn-success">Fin</button></td>
+              <td>Payement R1C2 22/04/2020</td>
+              <td><button type="button" class="btn btn-success btn-round btn-outline-success">Visualisation</button></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Alerte table End -->
+</div>

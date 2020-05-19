@@ -1,0 +1,83 @@
+<div class="button-page">
+    <div class="row">
+        <div class="col-sm-12">
+            <app-card [title]="'Visualisation hippodrome'">
+                <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                </mat-form-field>
+
+                <button mat-raised-button color="primary" (click)="displayNewHippodrome()" style="float: right;">
+                    <span *ngIf="!newHippodromePanel">Nouveau</span>
+                    <mat-icon *ngIf="!newHippodromePanel">add_circle</mat-icon>
+                    <span *ngIf="newHippodromePanel">Annuler</span>
+                    <mat-icon *ngIf="newHippodromePanel">cancel</mat-icon>
+                </button>
+
+                <div class="row" *ngIf="newHippodromePanel">
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <input matInput placeholder="Code">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <input matInput placeholder="Abreviation">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <mat-label>Pays</mat-label>
+                            <mat-select>
+                                <mat-option value="MAR">MAR</mat-option>
+                                <mat-option value="FR">FR</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <button mat-raised-button color="primary" (click)="addNewHipprome()">Valider</button>
+                    </div>
+                </div>
+
+                <div class="mat-elevation-z8">
+                    <table mat-table [dataSource]="dataSource" matSort>
+
+                        <ng-container matColumnDef="code">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Code </th>
+                            <td mat-cell *matCellDef="let row"> {{row.code }} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="abreviation">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Abreviation </th>
+                            <td mat-cell *matCellDef="let row"> {{row.abreviation}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="pays">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Pays </th>
+                            <td mat-cell *matCellDef="let row"> {{row.pays}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="action">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
+                            <td mat-cell *matCellDef="let row">
+                                <button mat-icon-button>
+                                    <mat-icon>remove_red_eye</mat-icon>
+                                </button>
+                                <button mat-icon-button aria-label="Example icon-button with a heart icon">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                                <button mat-icon-button aria-label="Example icon-button with a heart icon">
+                                    <mat-icon>highlight_off</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                        </tr>
+                    </table>
+                    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                </div>
+                <br><br>
+            </app-card>
+        </div>
+    </div>

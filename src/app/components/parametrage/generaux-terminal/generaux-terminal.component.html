@@ -1,0 +1,107 @@
+<div class="button-page">
+    <div class="row">
+      <div class="col-sm-12">
+        <app-card [title]="'Parametres Généraux terminaux'">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="sub-title">Recherche</div>
+            </div>
+            <div class="col-sm-12">
+              <div class="row">
+                <div class="col-md-6">
+                    <mat-form-field>
+                        <mat-label>Paramètre</mat-label>
+                        <mat-select>
+                            <mat-option value="AutPaiementGL">Paiement GL</mat-option>
+                            <mat-option value="AutCreAllAlloJeu">Création/Alim Allo jeu</mat-option>
+                            <mat-option value="TestProdution">Tests production</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-6">
+                  <button mat-raised-button class="right-position" color="primary" (click)="displayParametreGenerauxPanel()">
+                    Rechercher
+                    <mat-icon>search</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </app-card>
+      </div>
+    </div>
+  </div>
+
+  <div class="button-page" *ngIf="parametreGenerauxPanel">
+    <div class="row">
+        <div class="col-sm-12">
+            <app-card [title]="'Visualisation des parametres gènèraux des terminaux'">
+                <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                </mat-form-field>
+
+                <button mat-raised-button color="primary" (click)="newGeneralTerminal()" style="float: right;">
+                    Nouveau
+                    <mat-icon>add_circle</mat-icon>
+                </button>
+
+                <div class="mat-elevation-z8">
+                    <table mat-table [dataSource]="dataSource" matSort>
+
+                        <ng-container matColumnDef="pdv">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> PDV </th>
+                            <td mat-cell *matCellDef="let row"> {{row.pdv}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="position">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Position </th>
+                            <td mat-cell *matCellDef="let row"> {{row.position}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="ip">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> @Ip </th>
+                            <td mat-cell *matCellDef="let row"> {{row.ip}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="autoPaiement">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Auto. Paiement Gros Lot</th>
+                            <td mat-cell *matCellDef="let row"> 
+                                <mat-icon color="primary" *ngIf="row.autoPaiement == true">thumb_up_alt</mat-icon>
+                                <mat-icon color="warn" *ngIf="row.autoPaiement == false">thumb_down_alt</mat-icon>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="autoCreation">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Auto. ACpte jeullo Création</th>
+                            <td mat-cell *matCellDef="let row"> 
+                                <mat-icon color="primary" *ngIf="row.autoCreation == true">thumb_up_alt</mat-icon>
+                                <mat-icon color="warn" *ngIf="row.autoCreation == false">thumb_down_alt</mat-icon>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="actions">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
+                            <td mat-cell *matCellDef="let row"> 
+                                <button mat-mini-fab color="green">
+                                    <mat-icon>remove_red_eye</mat-icon>
+                                </button>
+                                <button mat-mini-fab color="green">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                                <button mat-mini-fab color="green">
+                                    <mat-icon>highlight_off</mat-icon>
+                                </button>    
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                        </tr>
+                    </table>
+                    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                </div>
+                <br><br>
+            </app-card>
+        </div>
+    </div>
+</div>

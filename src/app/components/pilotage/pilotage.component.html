@@ -1,0 +1,446 @@
+<div class="button-page">
+    <div class="row">
+        <div class="col-sm-12">
+            <app-card [title]="'Pilotage'">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="sub-title">Recherche</div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <mat-form-field>
+                                    <input matInput [matDatepicker]="picker" placeholder="Choisissez une date"
+                                        color="primary">
+                                    <mat-datepicker-toggle matSuffix [for]="picker" color="primary">
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker #picker color="primary"></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-3">
+                                <mat-form-field>
+                                    <mat-label>Réunions</mat-label>
+                                    <mat-select [(value)]="selectedReunion">
+                                        <mat-option>None</mat-option>
+                                        <mat-option value="R1">R1</mat-option>
+                                        <mat-option value="R2">R2</mat-option>
+                                        <mat-option value="R3">R3</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-3">
+                                <mat-form-field>
+                                    <mat-label>Statut De </mat-label>
+                                    <mat-select [(value)]="selectedEtatDe">
+                                        <mat-option value="encours">En cours</mat-option>
+                                        <mat-option value="Prete">Prête</mat-option>
+                                        <mat-option value="Validee">Validée</mat-option>
+                                        <mat-option value="Active">Active</mat-option>
+                                        <mat-option value="PayeeRemboursee">Payée/Remboursée</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-3">
+                                <mat-form-field>
+                                    <mat-label>Statut à </mat-label>
+                                    <mat-select [(value)]="selectedEtatA">
+                                        <mat-option value="encours">En cours</mat-option>
+                                        <mat-option value="Prete">Prête</mat-option>
+                                        <mat-option value="Validee">Validée</mat-option>
+                                        <mat-option value="Active">Active</mat-option>
+                                        <mat-option value="PayeeRemboursee">Payée/Remboursée</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <div class="p-2">
+                                <button mat-raised-button color="primary" style="float: left;"
+                                    (click)="displayCoursesTableFunction()">
+                                    Rechercher
+                                    <mat-icon>search</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </app-card>
+        </div>
+    </div>
+</div>
+
+<div class="button-page" *ngIf="displaycoursesTable">
+    <div class="row">
+        <div class="col-sm-12">
+            <app-card [title]="'Visualisation elements de pilotage'">
+                <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                </mat-form-field>
+
+                <div class="mat-elevation-z8">
+                    <table mat-table [dataSource]="dataSource" matSort>
+
+                        <ng-container matColumnDef="reunion">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Reunion </th>
+                            <td mat-cell *matCellDef="let row"> {{row.reunion}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="hippodrome">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Hippodrome </th>
+                            <td mat-cell *matCellDef="let row"> {{row.hippodrome}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="courseOrder">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Course </th>
+                            <td mat-cell *matCellDef="let row"> {{row.courseOrder}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="heureDepart">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Heure </th>
+                            <td mat-cell *matCellDef="let row"> {{row.heureDepart | date : 'HH:mm:ss'}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="arrivee">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Arrivee </th>
+                            <td mat-cell *matCellDef="let row"> {{row.arriver}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="statut">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Statut% </th>
+                            <td mat-cell *matCellDef="let row"
+                                [style.color]="row.statut != 'Depart' ? 'red' : 'green' ">
+                                <strong>{{row.statut}}</strong>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="action">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
+                            <td mat-cell *matCellDef="let row">
+                                <button mat-mini-fab color="green">
+                                    <mat-icon>remove_red_eye</mat-icon>
+                                </button>
+                                <button mat-mini-fab color="green" (click)="displayPartantNonPartant(row)">
+                                    <img src="assets/images/horse-cheese.png">
+                                </button>
+                                <button mat-mini-fab color="green">
+                                    <img src="assets/images/time-icon.png" (click)="displayMiseAjourStatut(row)">
+                                </button>
+                                <button mat-mini-fab color="green" [disabled]="row.statut != 'Depart'"
+                                    (click)="displayRepartition(row)">
+                                    <img src="assets/images/repartition.png">
+                                </button>
+                                <button mat-mini-fab color="green" [disabled]="row.statut != 'Arrivee Definitive'" (click)="displaySuspendeVentePaiement(row)">
+                                    <img src="assets/images/paiment.png">
+                                </button>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                        </tr>
+                    </table>
+                    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                </div>
+                <br><br>
+            </app-card>
+        </div>
+    </div>
+</div>
+
+<div class="button-page" *ngIf="partantNonPartant">
+    <div class="row">
+        <div class="col-sm-12">
+            <app-card [title]="'Declaration des Non partants/Noueaux partants'">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="sub-title">{{rowSelected.reunion}} - {{rowSelected.hippodrome}} -
+                            {{rowSelected.heureDepart | date : 'dd/MM/yyyy HH:mm'}}</div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr class="text-uppercase">
+                                            <th>N°</th>
+                                            <th>Nom Cheval</th>
+                                            <th>Ecurie</th>
+                                            <th>Déclarer NP</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>Jhon Jack</td>
+                                            <td>A</td>
+                                            <td>
+                                                <mat-checkbox color="primary"></mat-checkbox>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>Marc Le GRAND</td>
+                                            <td>A</td>
+                                            <td>
+                                                <mat-checkbox color="primary"></mat-checkbox>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>3</td>
+                                            <td>Jasper</td>
+                                            <td>B</td>
+                                            <td>
+                                                <mat-checkbox color="primary"></mat-checkbox>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <div class="p-2">
+                                <button mat-raised-button color="primary" style="float: left;"
+                                    (click)="hidePartantNonPartant()">
+                                    Valider
+                                </button>&nbsp;&nbsp;&nbsp;
+                                <button mat-raised-button color="warn" style="float: left;"
+                                    (click)="hidePartantNonPartant()">
+                                    Annuler
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </app-card>
+        </div>
+    </div>
+</div>
+
+<div class="button-page" *ngIf="miseAJour">
+    <div class="row">
+        <div class="col-sm-12">
+            <app-card [title]="'Mise à jour des statut'">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="sub-title">{{rowSelected.reunion}} - {{rowSelected.hippodrome}} -
+                            {{rowSelected.heureDepart | date : 'dd/MM/yyyy HH:mm'}}</div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <mat-form-field>
+                                    <mat-label>Etat</mat-label>
+                                    <mat-select [(value)]="selectedEtat">
+                                        <mat-option value="enattente">En Attente</mat-option>
+                                        <mat-option value="depart">Depart</mat-option>
+                                        <mat-option value="arriveeprovisoire">Arrivee provisoire</mat-option>
+                                        <mat-option value="arriveedefinitive">Arrivee Definitive</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-6"
+                                *ngIf="rowSelected.statut == 'Arrivee Definitive' || rowSelected.statut == 'Arrivee Provisoire' ">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Arrivee" value="{{rowSelected.arriver}}">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <div class="p-2">
+                                <button mat-raised-button color="primary" style="float: left;"
+                                    (click)="hideMiseAjour()">
+                                    Valider
+                                </button>&nbsp;&nbsp;&nbsp;
+                                <button mat-raised-button color="warn" style="float: left;" (click)="hideMiseAjour()">
+                                    Annuler
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </app-card>
+        </div>
+    </div>
+</div>
+
+<div class="button-page" *ngIf="repartition">
+    <div class="row">
+        <div class="col-sm-12">
+            <app-card [title]="'Repartition Course'">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="sub-title">{{rowSelected.reunion}} - {{rowSelected.hippodrome}} -
+                            {{rowSelected.heureDepart | date : 'dd/MM/yyyy HH:mm'}}</div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr class="text-uppercase">
+                                                <th>Produit</th>
+                                                <th>Répartition/Rapports</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Simple Gagnant</td>
+                                                <td>
+                                                    <button mat-mini-fab color="green"
+                                                        (click)="displayRepartitionDialog(rowSelected)">
+                                                        <mat-icon>remove_red_eye</mat-icon>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Simple Placé</td>
+                                                <td>
+                                                    <button mat-mini-fab color="green"
+                                                        (click)="displayRepartitionDialog(rowSelected)">
+                                                        <mat-icon>remove_red_eye</mat-icon>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Jumelé Gagnant</td>
+                                                <td>
+                                                    <button mat-mini-fab color="green"
+                                                        (click)="displayRepartitionDialog(rowSelected)">
+                                                        <mat-icon>remove_red_eye</mat-icon>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Jumelé Placé</td>
+                                                <td>
+                                                    <button mat-mini-fab color="green"
+                                                        (click)="displayRepartitionDialog(rowSelected)">
+                                                        <mat-icon>remove_red_eye</mat-icon>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tircé</td>
+                                                <td>
+                                                    <button mat-mini-fab color="green"
+                                                        (click)="displayRepartitionDialog(rowSelected)">
+                                                        <mat-icon>remove_red_eye</mat-icon>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Trio</td>
+                                                <td>
+                                                    <button mat-mini-fab color="green"
+                                                        (click)="displayRepartitionDialog(rowSelected)">
+                                                        <mat-icon>remove_red_eye</mat-icon>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Quarté</td>
+                                                <td>
+                                                    <button mat-mini-fab color="green"
+                                                        (click)="displayRepartitionDialog(rowSelected)">
+                                                        <mat-icon>remove_red_eye</mat-icon>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Quarté +</td>
+                                                <td>
+                                                    <button mat-mini-fab color="green"
+                                                        (click)="displayRepartitionDialog(rowSelected)">
+                                                        <mat-icon>remove_red_eye</mat-icon>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Quinté</td>
+                                                <td>
+                                                    <button mat-mini-fab color="green"
+                                                        (click)="displayRepartitionDialog(rowSelected)">
+                                                        <mat-icon>remove_red_eye</mat-icon>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Quinté +</td>
+                                                <td>
+                                                    <button mat-mini-fab color="green"
+                                                        (click)="displayRepartitionDialog(rowSelected)">
+                                                        <mat-icon>remove_red_eye</mat-icon>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <div class="p-2">
+                                <button mat-raised-button color="primary" style="float: left;"
+                                    (click)="hideRepartition()">
+                                    Valider
+                                </button>&nbsp;&nbsp;&nbsp;
+                                <button mat-raised-button color="warn" style="float: left;" (click)="hideRepartition()">
+                                    Annuler
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </app-card>
+        </div>
+    </div>
+</div>
+
+<div class="button-page" *ngIf="suspendreVentePaiment">
+    <div class="row">
+        <div class="col-sm-12">
+            <app-card [title]="'Suspention Vente/Paiment'">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="sub-title">{{rowSelected.reunion}} - {{rowSelected.hippodrome}} -
+                            {{rowSelected.heureDepart | date : 'dd/MM/yyyy HH:mm'}}</div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <mat-label>Activer/Suspendre les ventes :     </mat-label>
+                                <mat-form-field>
+                                    <mat-label>Produits : </mat-label>
+                                    <mat-select [formControl]="produits" multiple>
+                                      <mat-option *ngFor="let produit of produitList" [value]="produit">{{produit}}</mat-option>
+                                    </mat-select>
+                                  </mat-form-field>
+                            </div>
+                            <div class="col-md-6">
+                                <mat-label>Payer/Suspendre le paiement :      </mat-label>
+                                <mat-form-field>
+                                    <mat-label>Produits : </mat-label>
+                                    <mat-select [formControl]="produits" multiple>
+                                      <mat-option *ngFor="let produit of produitList" [value]="produit">{{produit}}</mat-option>
+                                    </mat-select>
+                                  </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <div class="p-2">
+                                <button mat-raised-button color="primary" style="float: left;"
+                                    (click)="hideSuspendeVentePaiement()">
+                                    Valider
+                                </button>&nbsp;&nbsp;&nbsp;
+                                <button mat-raised-button color="warn" style="float: left;" (click)="hideSuspendeVentePaiement()">
+                                    Annuler
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </app-card>
+        </div>
+    </div>
+</div>

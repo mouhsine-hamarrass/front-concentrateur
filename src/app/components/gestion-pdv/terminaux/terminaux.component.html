@@ -1,0 +1,144 @@
+<div class="button-page">
+    <div class="row">
+        <div class="col-sm-12">
+            <app-card [title]="'Critere de recherche des Terminal'">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="sub-title">Recherche</div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <mat-form-field>
+                                    <mat-label>Agence</mat-label>
+                                    <mat-select>
+                                        <mat-option value="Rabat">Rabat</mat-option>
+                                        <mat-option value="Meknes">Meknes</mat-option>
+                                        <mat-option value="Fes">Fes</mat-option>
+                                        <mat-option value="Oujda">Oujda</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-3">
+                                <mat-form-field>
+                                    <mat-label>PDV</mat-label>
+                                    <mat-select>
+                                        <mat-option value="PDV1">PDV1</mat-option>
+                                        <mat-option value="PDV2">PDV2</mat-option>
+                                        <mat-option value="PDV3">PDV3</mat-option>
+                                        <mat-option value="PDV4">PDV4</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-3">
+                                <mat-form-field>
+                                    <mat-label>Ville</mat-label>
+                                    <mat-select>
+                                        <mat-option value="Rabat">Rabat</mat-option>
+                                        <mat-option value="Casa">Casa</mat-option>
+                                        <mat-option value="Oujda">Oujda</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-3">
+                                <mat-form-field>
+                                    <mat-label>Statut</mat-label>
+                                    <mat-select>
+                                        <mat-option value="Active">Active</mat-option>
+                                        <mat-option value="Suspendu">Suspendu</mat-option>
+                                        <mat-option value="Ferme">Fermé</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <mat-form-field>
+                                    <mat-label>Type Terminal</mat-label>
+                                    <mat-select>
+                                        <mat-option value="Active">Active</mat-option>
+                                        <mat-option value="Suspendu">Suspendu</mat-option>
+                                        <mat-option value="Ferme">Fermé</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="d-flex justify-content-end">
+                                <div class="p-2" >
+                                    <button mat-raised-button color="primary" (click)="consultationTerminal()">
+                                        Recherche <mat-icon>search</mat-icon>
+                                    </button>&nbsp;
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br><br><br>
+            </app-card>
+        </div>
+    </div>
+</div>
+
+<div class="button-page" *ngIf="terminalPanel">
+    <div class="row">
+        <div class="col-sm-12">
+            <app-card [title]="'Visualisation Terminaux'">
+                <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                </mat-form-field>
+
+                <button mat-raised-button color="primary" style="float: right;">
+                    Nouveau
+                    <mat-icon>add_circle</mat-icon>
+                </button>&#160;&#160;&#160;
+
+                <div class="mat-elevation-z8">
+                    <table mat-table [dataSource]="dataSource" matSort>
+
+                        <ng-container matColumnDef="agence">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Agence </th>
+                            <td mat-cell *matCellDef="let row"> {{row.agence}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="pdv">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> PDV </th>
+                            <td mat-cell *matCellDef="let row"> {{row.pdv}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="terminal">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Terminal </th>
+                            <td mat-cell *matCellDef="let row"> {{row.ville}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="version">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Version </th>
+                            <td mat-cell *matCellDef="let row"> {{row.statut}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="statut">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Statut </th>
+                            <td mat-cell *matCellDef="let row">
+                                <span *ngIf="!updateStart"> Non Mis à Jour</span> 
+                                <mat-spinner *ngIf="updateStart" [diameter]='30'></mat-spinner>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="action">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
+                            <td mat-cell *matCellDef="let row">
+                                <button mat-mini-fab color="primary" matTooltip="Update" (click)="runUpdate()">
+                                    <mat-icon>track_changes</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                        </tr>
+                    </table>
+                    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                </div>
+                <br><br>
+            </app-card>
+        </div>
+    </div>
+</div>

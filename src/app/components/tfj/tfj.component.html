@@ -1,0 +1,86 @@
+<div class="button-page">
+    <div class="row">
+      <div class="col-sm-12">
+        <app-card [title]="'Recherche traitement fin de journée'">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="row">
+                <div class="col-md-4">
+                  <mat-form-field class="example-full-width">
+                    <input matInput [matDatepicker]="PickerDateDebut" placeholder="Date Début" >
+                    <mat-datepicker-toggle matSuffix [for]="PickerDateDebut"></mat-datepicker-toggle>
+                    <mat-datepicker touchUi #PickerDateDebut></mat-datepicker>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                  <mat-form-field class="example-full-width">
+                    <input matInput [matDatepicker]="PickerDateFin" placeholder="Date Fin">
+                    <mat-datepicker-toggle matSuffix [for]="PickerDateFin"></mat-datepicker-toggle>
+                    <mat-datepicker touchUi #PickerDateFin></mat-datepicker>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                  <button mat-raised-button color="primary" (click)="displayActionsHistoryFunction()">
+                    Rechercher
+                    <mat-icon>search</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </app-card>
+      </div>
+    </div>
+  </div>
+  
+  
+  <!-- Display Historique -->
+  <div class="button-page" *ngIf="displayActionsHistory">
+    <div class="row">
+      <div class="col-sm-12">
+        <app-card [title]="'Actions & Historique'">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="sub-title"> 
+                Lancement/Visualisation des traitements de fin de journée 
+              </div>
+            </div>
+            <div class="col-sm-12">
+                <mat-form-field>
+                  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                </mat-form-field>
+        
+                <div class="mat-elevation-z8">
+                  <table mat-table [dataSource]="dataSource" matSort>
+        
+                    <ng-container matColumnDef="Date">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+                      <td mat-cell *matCellDef="let row"> {{row.date | date : 'dd/MM/yyyy'}} </td>
+                    </ng-container>
+        
+                    <ng-container matColumnDef="STFJ">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Statut Traitement de Fin de Journée </th>
+                      <td mat-cell *matCellDef="let row"> {{row.statut}} </td>
+                    </ng-container>
+        
+                    <ng-container matColumnDef="Action">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
+                      <td mat-cell *matCellDef="let row"> 
+                        <button mat-raised-button style="width:100%;" *ngIf="row.statut != 'En Cours'" > Consulter Historique </button>
+                        <button mat-raised-button style="width:100%;" color="primary" *ngIf="row.statut == 'En Cours'" (click)="LaunchStorageLauncher()"> Lancer Sauvegarde  </button>
+                      </td>
+                    </ng-container>
+        
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                    </tr>
+                  </table>
+                  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                </div>
+            </div>
+          </div>
+          <br>
+        </app-card>
+      </div>
+    </div>
+  </div>  

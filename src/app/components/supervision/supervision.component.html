@@ -1,0 +1,43 @@
+<div class="button-page">
+    <div class="row">
+        <div class="col-sm-12">
+            <app-card [title]="'Supervision'">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="sub-title">Recherche</div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <button mat-raised-button color="primary" class="mat-button-size" (click)="displayTicketPannel()">
+                                    Tickets
+                                </button>
+                            </div>
+                            <div class="col-md-3">
+                                <button mat-raised-button color="primary" class="mat-button-size" (click)="displayVoucherPannel()">
+                                    Voucher
+                                </button>
+                            </div>
+                            <div class="col-md-3">
+                                <button mat-raised-button color="primary" class="mat-button-size" (click)="displayEvenementPanel()">
+                                    Evénement (Course)
+                                </button>
+                            </div>
+                            <div class="col-md-3">
+                                <button mat-raised-button color="primary" class="mat-button-size" (click)="displayPannePannel()">
+                                    Pannes
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br><br><br>
+            </app-card>
+        </div>
+    </div>
+</div>
+
+<app-ticket *ngIf="ticketPanel"></app-ticket>
+<app-panne *ngIf="pannePanel"></app-panne>
+<app-evenement-course *ngIf="evenementPanel"></app-evenement-course>
+<app-voucher *ngIf="voucherPannel"></app-voucher>

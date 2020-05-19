@@ -1,0 +1,146 @@
+<div class="button-page">
+    <div class="row">
+        <div class="col-sm-12">
+            <app-card [title]="'Validation Offre'">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="sub-title">Recherche</div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <mat-form-field>
+                                    <input matInput [matDatepicker]="picker" placeholder="Choisissez une date"
+                                        color="primary">
+                                    <mat-datepicker-toggle matSuffix [for]="picker" color="primary">
+                                    </mat-datepicker-toggle>
+                                    <mat-datepicker #picker color="primary"></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-3">
+                                <mat-form-field>
+                                    <mat-label>Réunions</mat-label>
+                                    <mat-select [(value)]="selectedReunion">
+                                        <mat-option>None</mat-option>
+                                        <mat-option value="R1C1">R1C1</mat-option>
+                                        <mat-option value="R1C2">R1C2</mat-option>
+                                        <mat-option value="R1C3">R1C3</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-3">
+                                <mat-form-field>
+                                    <mat-label>Réunions</mat-label>
+                                    <mat-select [(value)]="selectedEtat">
+                                        <mat-option value="encours">En cours</mat-option>
+                                        <mat-option value="Prete">Prête</mat-option>
+                                        <mat-option value="Validee">Validée</mat-option>
+                                        <mat-option value="Active">Active</mat-option>
+                                        <mat-option value="PayeeRemboursee">Payée/Remboursée</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-3">
+                                <button mat-raised-button color="primary" (click)="displayCoursesTableFunction()">
+                                    Rechercher
+                                    <mat-icon>search</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </app-card>
+        </div>
+    </div>
+</div>
+
+<div class="button-page" *ngIf="displaycoursesTable">
+    <div class="row">
+        <div class="col-sm-12">
+            <app-card [title]="'Visualisation offre pour validation'">
+                <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                </mat-form-field>
+
+                <div class="mat-elevation-z8">
+                    <table mat-table [dataSource]="dataSource" matSort>
+
+                        <ng-container matColumnDef="reunion">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Reunion </th>
+                            <td mat-cell *matCellDef="let row"> {{row.reunion}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="hippodrome">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Hippodrome </th>
+                            <td mat-cell *matCellDef="let row"> {{row.hippodrome}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="diffusion">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Diffusion </th>
+                            <td mat-cell *matCellDef="let row"> {{row.diffusion}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="courseOrder">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Course </th>
+                            <td mat-cell *matCellDef="let row"> {{row.courseOrder}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="heureDepart">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Heure </th>
+                            <td mat-cell *matCellDef="let row"> {{row.heureDepart | date : 'HH:mm:ss'}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="produit">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Produit </th>
+                            <td mat-cell *matCellDef="let row"> {{row.produit}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="etat">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Etat% </th>
+                            <td mat-cell *matCellDef="let row" [style.color]="row.color"> <strong>{{row.etat}}</strong>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="action">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
+                            <td mat-cell *matCellDef="let row">
+                                <button mat-mini-fab color="green">
+                                    <mat-icon>remove_red_eye</mat-icon>
+                                </button>
+                                <button mat-mini-fab color="green">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                                <button mat-mini-fab color="green">
+                                    <mat-icon>highlight_off</mat-icon>
+                                </button>
+                                <button mat-mini-fab color="green">
+                                    <img src="assets/images/percentage.png" alt="percentage icon">
+                                </button>
+                                <button mat-mini-fab color="green">
+                                    <img src="assets/images/hand-check.png" alt="hand-check icon">
+                                </button>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                        </tr>
+                    </table>
+                    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <div class="p-2" >
+                        <button mat-raised-button color="warn" (click)="dismissAcceptation()" [disabled]="acceptOrRefuseOffre">
+                            Annuler
+                        </button>&nbsp;
+                        <button mat-raised-button color="primary" (click)="improveProposition()" [disabled]="acceptOrRefuseOffre">
+                            Accepter
+                        </button>
+                    </div>
+                </div>
+                <br><br>
+            </app-card>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,119 @@
+.right-position {
+    position: absolute;
+    right: 0;
+  }
+  
+  .mat-column-statut {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 21.25% !important;
+    width: 21.25% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    text-align: center !important;
+    word-break: break-word;
+  
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+  
+  .mat-column-voucherSeuil {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 21.25% !important;
+    width: 21.25% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    text-align: center !important;
+  
+    word-break: break-word;
+  
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+  
+  .mat-column-plafond {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 21.25% !important;
+    width: 21.25% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    text-align: center !important;
+  
+    word-break: break-word;
+  
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+  
+  .mat-column-delaisPurge {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 21.25% !important;
+    width: 21.25% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    text-align: center !important;
+  
+    word-break: break-word;
+  
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+  
+  .mat-column-lieuPaimement {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 21.25% !important;
+    width: 21.25% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    text-align: center !important;
+  
+    word-break: break-word;
+  
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+  
+  .mat-column-action {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 21.25% !important;
+    width: 21.25% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    text-align: center !important;
+  
+    word-break: break-word;
+  
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+  
+  ::ng-deep .mat-sort-header-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .max-width{
+      width: 100% !important;
+  }
+
+  .radio-width{
+      width: 25% !important;
+  }
+  

@@ -1,0 +1,138 @@
+<div class="button-page">
+    <div class="row">
+        <div class="col-sm-12">
+            <app-card [title]="'Visualisation Paiement Lot'">
+                <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                </mat-form-field>
+
+                <button mat-raised-button color="primary" (click)="displayNewPaiementLot()" class="right-button">
+                    <span *ngIf="!newPaiementLot">Nouveau</span>
+                    <mat-icon *ngIf="!newPaiementLot">add_circle</mat-icon>
+                    <span *ngIf="newPaiementLot">Annuler</span>
+                    <mat-icon *ngIf="newPaiementLot">cancel</mat-icon>
+                </button>
+
+                <div class="row" *ngIf="newPaiementLot">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <mat-form-field>
+                                    <mat-label>Type du lot</mat-label>
+                                    <mat-select>
+                                        <mat-option value="petit">Petit</mat-option>
+                                        <mat-option value="moyen">Moyen</mat-option>
+                                        <mat-option value="gros">Gros</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-3">
+                                <mat-form-field>
+                                    <mat-label>Seuil du lot</mat-label>
+                                    <mat-select>
+                                        <mat-option value="0">0</mat-option>
+                                        <mat-option value="10000">10000</mat-option>
+                                        <mat-option value="30000">30000</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <mat-label for="paiement"> Lieu de paiement autorisé : </mat-label>
+                            <mat-radio-group aria-label="Select an option" id="paiement">
+                                <mat-radio-button color="primary" value="PDV lui-même et Agence de Rattachement">PDV
+                                    lui-même</mat-radio-button>
+                                <mat-radio-button color="primary" value="toutes les agences">Toutes les Agences
+                                </mat-radio-button>
+                                <mat-radio-button color="primary" value="toutes les pdvs">Toutes les pdvs
+                                </mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                        <div class="row">
+                            <mat-label for="annulation"> Lieu d'annulation autorisé : </mat-label>
+                            <mat-radio-group aria-label="Select an option" id="annulation">
+                                <mat-radio-button color="primary" value="PDV lui-même et Agence de Rattachement">PDV
+                                    lui-même</mat-radio-button>
+                                <mat-radio-button color="primary" value="toutes les agences">Toutes les Agences
+                                </mat-radio-button>
+                                <mat-radio-button color="primary" value="toutes les pdvs">Toutes les pdvs
+                                </mat-radio-button>
+                            </mat-radio-group>
+                        </div>
+                        <button mat-raised-button color="primary" (click)="displayNewPaiementLot()" class="right-button">
+                            Valider<mat-icon>add_circle</mat-icon>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="mat-elevation-z8">
+                    <table mat-table [dataSource]="dataSource" matSort>
+
+                        <ng-container matColumnDef="code">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Code </th>
+                            <td mat-cell *matCellDef="let row"> {{row.code}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="typeLot">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Type Lot </th>
+                            <td mat-cell *matCellDef="let row"> {{row.typeLot}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="seuilLot">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Seuil Lot </th>
+                            <td mat-cell *matCellDef="let row"> {{row.seuilLot}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="montantAvance">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Montant Avance </th>
+                            <td mat-cell *matCellDef="let row"> {{row.montantAvance}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="lieuPaimenet">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Lieu de paiement du lot </th>
+                            <td mat-cell *matCellDef="let row"> {{ row.lieuPaimenet }} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="lieuAnnulation">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Lieu d’annulation autorisé </th>
+                            <td mat-cell *matCellDef="let row"> {{row.lieuAnnulation}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="delaiPurge">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Delai de Purge </th>
+                            <td mat-cell *matCellDef="let row"> <strong>{{row.delaiPurge}}</strong>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="action">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
+                            <td mat-cell *matCellDef="let row">
+                                <button mat-mini-fab color="green">
+                                    <mat-icon>remove_red_eye</mat-icon>
+                                </button>
+                                <button mat-mini-fab color="green">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                                <button mat-mini-fab color="green">
+                                    <mat-icon>highlight_off</mat-icon>
+                                </button>
+                                <button mat-mini-fab color="green" [disabled]="row.etat != 'Active'">
+                                    <img src="assets/images/percentage.png" alt="percentage icon">
+                                </button>
+                                <button mat-mini-fab color="green" [disabled]="row.etat != 'Active'">
+                                    <img src="assets/images/hand-check.png" alt="hand-check icon">
+                                </button>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                        </tr>
+                    </table>
+                    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                </div>
+                <br><br>
+            </app-card>
+        </div>
+    </div>
+</div>

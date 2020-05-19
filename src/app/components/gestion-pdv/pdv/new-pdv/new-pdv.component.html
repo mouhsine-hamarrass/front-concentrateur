@@ -1,0 +1,195 @@
+<mat-card class="example-card">
+    <mat-card-header>
+        <mat-card-title>Création PDV</mat-card-title>
+        <mat-card-subtitle>Non modifiable justqu'au click sur le boutton en bas</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="button-page">
+            <div class="row">
+                <div class="col-sm-12">
+                    <app-card [title]="''">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="sub-title">Saisie</div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <mat-form-field>
+                                            <input matInput placeholder="Code" >
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <mat-form-field>
+                                            <input matInput placeholder="Désignation" >
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <mat-form-field>
+                                            <input matInput placeholder="Attributaire">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <mat-form-field>
+                                            <input matInput placeholder="Numero">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <mat-form-field>
+                                            <input matInput placeholder="Ville">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <mat-form-field>
+                                            <input matInput placeholder="Type PDV">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <mat-form-field>
+                                            <input matInput placeholder="Agence Rattachement">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <mat-form-field>
+                                            <input matInput placeholder="Masque @IP" >
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <mat-radio-button [(ngModel)]="prepaye">
+                                            Prépayé</mat-radio-button>
+                                        <mat-radio-button [(ngModel)]="postPaye">
+                                            Postpayé</mat-radio-button>
+                                    </div>
+                                    <div class="col-md-3"></div>
+                                    <div class="col-md-3"></div>
+                                    <div class="col-md-3">
+                                        <div class="d-flex justify-content-end">
+                                            <div class="p-2">
+                                                <button mat-raised-button color="primary" (click)="addPositionTerminal()">
+                                                    Ajouter Position terminal<mat-icon >add_circle</mat-icon>
+                                                </button>&nbsp;
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br><br><br>
+                    </app-card>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" *ngIf="positionTerminalPanel">
+            <div class="col-sm-12">
+                <app-card [title]="'Ajout Terminal'">
+                    <div class="row">
+                        <div class="col-sm-12">
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <mat-form-field>
+                                                <mat-label>Type</mat-label>
+                                                <mat-select [(value)]="terminal.type">
+                                                    <mat-option *ngFor="let type of terminalType" [value]="type">{{type}}</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <mat-form-field>
+                                                <input matInput placeholder="position" type="number" [(ngModel)]="terminal.position" >
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <mat-form-field>
+                                                <input matInput placeholder="@Ip" [(ngModel)]="terminal.ip">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <mat-form-field>
+                                                <input matInput placeholder="Préposé" [(ngModel)]="terminal.prepose">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <mat-form-field>
+                                                <input matInput placeholder="password" type="password" [(ngModel)]="password">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3"></div>
+                                        <div class="col-md-3">
+                                            <mat-checkbox color="primary" [(ngModel)]="terminal.autoPaiment">Auto.Paiement</mat-checkbox>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <mat-checkbox color="primary" [(ngModel)]="terminal.autoAlloJeu">Auto.Création cpte Allo-Jeu</mat-checkbox>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="d-flex justify-content-end">
+                                                <div class="p-2">
+                                                    <button mat-raised-button color="primary" (click)="addTerminal()">
+                                                        Valider<mat-icon >add_circle</mat-icon>
+                                                    </button>&nbsp;
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" *ngIf="terminaux.length > 0">
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr class="text-uppercase">
+                                                        <th>Type</th>
+                                                        <th>Position</th>
+                                                        <th>@IP</th>
+                                                        <th>Préposé</th>
+                                                        <th>Password</th>
+                                                        <th>Auto.Paiment GL</th>
+                                                        <th>Auto.Création cpt Allo-Jeu</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let terminal of terminaux">
+                                                        <td>{{terminal.type}}</td>
+                                                        <td>{{terminal.position}}</td>
+                                                        <td>{{terminal.ip}}</td>
+                                                        <td>{{terminal.prepose}}</td>
+                                                        <td>********</td>
+                                                        <td>
+                                                            <button mat-icon-button>
+                                                                <mat-icon *ngIf="terminal.autoPaiment">thumb_up_alt</mat-icon>
+                                                                <mat-icon *ngIf="!terminal.autoPaiment">thumb_down_alt</mat-icon>
+                                                            </button>
+                                                        </td>
+                                                        <td>
+                                                            <button mat-icon-button>
+                                                                <mat-icon *ngIf="terminal.autoAlloJeu">thumb_up_alt</mat-icon>
+                                                                <mat-icon *ngIf="!terminal.autoAlloJeu">thumb_down_alt</mat-icon>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </app-card>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>
+
+<div mat-dialog-actions style="float: right !important;">
+    <button mat-raised-button color="warn" (click)="onNoClick()">Annuler</button>
+    <button mat-raised-button color="primary" cdkFocusInitial (click)="ValidateAction()">Valider</button>
+</div>

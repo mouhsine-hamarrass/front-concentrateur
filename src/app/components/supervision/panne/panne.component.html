@@ -1,0 +1,106 @@
+<div class="button-page">
+    <div class="row">
+        <div class="col-sm-12">
+            <app-card [title]="'Critere de recherche pannes'">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="sub-title">Recherche</div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <mat-form-field>
+                                    <mat-label>Agence</mat-label>
+                                    <mat-select>
+                                        <mat-option value="Rabat">Rabat</mat-option>
+                                        <mat-option value="Meknes">Meknes</mat-option>
+                                        <mat-option value="Fes">Fes</mat-option>
+                                        <mat-option value="Oujda">Oujda</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-3">
+                                <mat-form-field>
+                                    <mat-label>PDV</mat-label>
+                                    <mat-select>
+                                        <mat-option value="PDV1">PDV1</mat-option>
+                                        <mat-option value="PDV2">PDV2</mat-option>
+                                        <mat-option value="PDV3">PDV3</mat-option>
+                                        <mat-option value="PDV4">PDV4</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-3">
+                                <mat-form-field>
+                                    <mat-label>Type de panne</mat-label>
+                                    <mat-select>
+                                        <mat-option value="R1C1">Connexion réseau</mat-option>
+                                        <mat-option value="R1C2">Imprimente</mat-option>
+                                        <mat-option value="R1C3">Tactile</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-3">
+                                <button mat-raised-button color="primary" class="mat-button-float"
+                                    (click)="recherchePannet()">
+                                    Recherche
+                                    <mat-icon>search</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br><br><br>
+            </app-card>
+        </div>
+    </div>
+</div>
+
+<div class="button-page" *ngIf="panneList">
+    <div class="row">
+        <div class="col-sm-12">
+            <app-card [title]="'Visualisation pannes'">
+                <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                </mat-form-field>
+
+                <div class="mat-elevation-z8">
+                    <table mat-table [dataSource]="dataSource" matSort>
+
+                        <ng-container matColumnDef="agence">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Agence </th>
+                            <td mat-cell *matCellDef="let row"> {{row.agence}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="pdv">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> PDV </th>
+                            <td mat-cell *matCellDef="let row"> {{row.pdv}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="terminal">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Teminal </th>
+                            <td mat-cell *matCellDef="let row"> {{row.terminal}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="panne">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Panne </th>
+                            <td mat-cell *matCellDef="let row"> {{row.panne}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="heure">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Heure </th>
+                            <td mat-cell *matCellDef="let row"> {{row.heure }} </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                        </tr>
+                    </table>
+                    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                </div>
+                <br><br>
+            </app-card>
+        </div>
+    </div>
+</div>
+

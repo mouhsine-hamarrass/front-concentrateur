@@ -1,0 +1,98 @@
+<div class="button-page">
+    <div class="row">
+      <div class="col-sm-12">
+        <app-card [title]="'Consultation'">
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="sub-title">Recherche</div>
+            </div>
+            <div class="col-sm-12">
+              <div class="row">
+                <div class="col-md-4">
+                  <mat-form-field>
+                    <input matInput [matDatepicker]="debutperiod" placeholder="date début de la periode" color="primary">
+                    <mat-datepicker-toggle matSuffix [for]="debutperiod" color="primary"></mat-datepicker-toggle>
+                    <mat-datepicker #debutperiod color="primary"></mat-datepicker>
+                  </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                    <mat-form-field>
+                        <input matInput [matDatepicker]="finperiod" placeholder="date fin de la periode" color="primary">
+                        <mat-datepicker-toggle matSuffix [for]="finperiod" color="primary"></mat-datepicker-toggle>
+                        <mat-datepicker #finperiod color="primary"></mat-datepicker>
+                      </mat-form-field>
+                </div>
+                <div class="col-md-4">
+                  <button mat-raised-button color="primary" (click)="displayTicketPannel()">
+                    Rechercher
+                    <mat-icon>search</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </app-card>
+      </div>
+    </div>
+  </div>
+
+  <div class="button-page" *ngIf="ticketPannel">
+    <div class="row">
+        <div class="col-sm-12">
+            <app-card [title]="'Visualisation Message Terminal'">
+                <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                </mat-form-field>
+
+                <button mat-raised-button color="primary" (click)="newMessage()" style="float: right;">
+                    Nouveau
+                    <mat-icon>add_circle</mat-icon>
+                </button>
+
+                <div class="mat-elevation-z8">
+                    <table mat-table [dataSource]="dataSource" matSort>
+
+                        <ng-container matColumnDef="date">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+                            <td mat-cell *matCellDef="let row"> {{row.date | date : 'dd/MM/yyyy HH:mm' }} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="objectMessage">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Objet Message </th>
+                            <td mat-cell *matCellDef="let row"> {{row.objectMessage}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="generalIndividuel">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> General/Individuel </th>
+                            <td mat-cell *matCellDef="let row"> <span *ngIf="row.general == true">General</span><span *ngIf="row.individuel == true">Individuel</span> </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="etat">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Etat </th>
+                            <td mat-cell *matCellDef="let row"> 
+                                <mat-icon color="primary" *ngIf="row.etat == true">lock</mat-icon>
+                                <mat-icon color="warn" *ngIf="row.etat == false">lock_open</mat-icon>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="dateDebut">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Date Debut </th>
+                            <td mat-cell *matCellDef="let row"> {{row.dateDebut | date : 'dd/MM/yyyy HH:mm' }} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="dateFin">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Date Fin </th>
+                            <td mat-cell *matCellDef="let row"> {{row.dateFin | date : 'dd/MM/yyyy HH:mm' }} </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                        </tr>
+                    </table>
+                    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                </div>
+                <br><br>
+            </app-card>
+        </div>
+    </div>
+</div>

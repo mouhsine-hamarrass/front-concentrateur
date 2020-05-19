@@ -1,0 +1,85 @@
+<div class="button-page">
+    <div class="row">
+        <div class="col-sm-12">
+            <app-card [title]="'Critere de recherche evenements'">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="sub-title">Recherche</div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-3">
+                                <mat-form-field>
+                                    <mat-label>Type d'évenement</mat-label>
+                                    <mat-select>
+                                        <mat-option value="R1C1">Parti</mat-option>
+                                        <mat-option value="R1C2">Arrivée définitive</mat-option>
+                                        <mat-option value="R1C3">Arrivée provisoire</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-3">
+                                <button mat-raised-button color="primary" class="mat-button-float"
+                                    (click)="rechercheEvenement()">
+                                    Recherche
+                                    <mat-icon>search</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br><br><br>
+            </app-card>
+        </div>
+    </div>
+</div>
+
+<div class="button-page" *ngIf="evenementList">
+    <div class="row">
+        <div class="col-sm-12">
+            <app-card [title]="'Resultat Evenement'">
+                <div class="row">
+                    <div class="col-sm-12">
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr class="text-uppercase">
+                                                <th>Evenement</th>
+                                                <th>Heure</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>R1C3 – Parti</td>
+                                                <td>
+                                                    10:20
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>R1C2 – Payé</td>
+                                                <td>
+                                                    10:10
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>R1C1 - Payé</td>
+                                                <td>
+                                                    10:10
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </app-card>
+        </div>
+    </div>
+</div>

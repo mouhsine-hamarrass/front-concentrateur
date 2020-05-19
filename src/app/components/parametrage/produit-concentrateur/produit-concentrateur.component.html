@@ -1,0 +1,182 @@
+<div class="button-page">
+    <div class="row">
+        <div class="col-sm-12">
+            <app-card [title]="'Visualisation des produits'">
+                <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                </mat-form-field>
+
+                <button mat-raised-button color="primary" (click)="displayNewProduitConcentrateur()"
+                    class="right-button">
+                    <span *ngIf="!newProduitConcentrateur">Nouveau</span>
+                    <mat-icon *ngIf="!newProduitConcentrateur">add_circle</mat-icon>
+                    <span *ngIf="newProduitConcentrateur">Annuler</span>
+                    <mat-icon *ngIf="newProduitConcentrateur">cancel</mat-icon>
+                </button>
+
+                <div class="row" *ngIf="newProduitConcentrateur">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <mat-form-field>
+                                    <input matInput type="number" placeholder="Libelle">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-3">
+                                <mat-form-field>
+                                    <input matInput type="number" placeholder="Designation">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-3">
+                                <mat-form-field>
+                                    <mat-label>Ordre</mat-label>
+                                    <mat-select>
+                                        <mat-option value="true">Oui</mat-option>
+                                        <mat-option value="false">Non</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-3">
+                                <mat-form-field>
+                                    <mat-label>Nbre Min de Partants</mat-label>
+                                    <mat-select>
+                                        <mat-option value="5">5</mat-option>
+                                        <mat-option value="7">7</mat-option>
+                                        <mat-option value="10">10</mat-option>
+                                        <mat-option value="15">15</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <mat-form-field>
+                                    <input matInput type="number" placeholder="Nbr Chv Base" type="number">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-3">
+                                <mat-radio-group>
+                                    <mat-radio-button color="primary" value="true">Actif</mat-radio-button>
+                                    <mat-radio-button color="primary" value="false">Inactif</mat-radio-button>
+                                </mat-radio-group>
+                            </div>
+                            <div class="col-md-3">
+                                <mat-form-field>
+                                    <mat-label>CahmpX</mat-label>
+                                    <mat-select>
+                                        <mat-option value="true">Oui</mat-option>
+                                        <mat-option value="false">Non</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-3">
+                                <mat-form-field>
+                                    <input matInput type="number" placeholder="Enjeu Min" type="number">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <mat-form-field>
+                                    <input matInput type="number" placeholder="Enjeu Max" type="number">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-9">
+                                <button mat-raised-button color="primary" (click)="displayNewProduitConcentrateur()"
+                                    class="right-button">
+                                    Valider<mat-icon>add_circle</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mat-elevation-z8">
+                    <table mat-table [dataSource]="dataSource" matSort>
+
+                        <ng-container matColumnDef="identifiant">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> N° </th>
+                            <td mat-cell *matCellDef="let row"> {{row.identifiant}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="designation">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Designation </th>
+                            <td mat-cell *matCellDef="let row"> {{row.designation}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="libelle">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Libelle </th>
+                            <td mat-cell *matCellDef="let row"> {{row.libelle}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="enjeuMin">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Enjeu Min </th>
+                            <td mat-cell *matCellDef="let row"> {{row.enjeuMin}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="enjeuMax">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Enjeu Max </th>
+                            <td mat-cell *matCellDef="let row"> {{ row.enjeuMax }} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="order">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Ordre </th>
+                            <td mat-cell *matCellDef="let row"> {{row.order}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="nbChBase">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Nbr CHV Base </th>
+                            <td mat-cell *matCellDef="let row"> <strong>{{row.nbChBase}}</strong>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="nbMinPart">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Nbr Min Part </th>
+                            <td mat-cell *matCellDef="let row"> <strong>{{row.nbMinPart}}</strong>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="champX">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Champ X </th>
+                            <td mat-cell *matCellDef="let row"> <strong>{{row.champX}}</strong>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="express">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Express </th>
+                            <td mat-cell *matCellDef="let row"> <strong>{{row.express}}</strong>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="statut">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Statut </th>
+                            <td mat-cell *matCellDef="let row"> <strong>{{row.statut}}</strong>
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="action">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
+                            <td mat-cell *matCellDef="let row">
+                                <button mat-mini-fab color="green">
+                                    <mat-icon>remove_red_eye</mat-icon>
+                                </button>
+                                <button mat-mini-fab color="green">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                                <button mat-mini-fab color="green">
+                                    <mat-icon>highlight_off</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                        </tr>
+                    </table>
+                    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                </div>
+                <br><br>
+            </app-card>
+        </div>
+    </div>
+</div>

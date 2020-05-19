@@ -1,0 +1,100 @@
+<div class="button-page">
+    <div class="row">
+        <div class="col-sm-12">
+            <app-card [title]="'Visualisation des attributaires'">
+                <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                </mat-form-field>
+
+                <button mat-raised-button color="primary" (click)="displayNewAttriibutairePanel()" style="float: right;">
+                    <span *ngIf="!newAttributairePanel">Nouveau</span>
+                    <mat-icon *ngIf="!newAttributairePanel">add_circle</mat-icon>
+                    <span *ngIf="newAttributairePanel">Annuler</span>
+                    <mat-icon *ngIf="newAttributairePanel">cancel</mat-icon>
+                </button>
+
+                <div class="row" *ngIf="newAttributairePanel">
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <input matInput placeholder="Code">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <mat-label>Produit MA</mat-label>
+                            <mat-select>
+                                <mat-option value="GAG">GAG</mat-option>
+                                <mat-option value="SP">SP</mat-option>
+                                <mat-option value="SG">SG</mat-option>
+                                <mat-option value="JP">JP</mat-option>
+                                <mat-option value="JG">JG</mat-option>
+                                <mat-option value="...">...</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <mat-form-field>
+                            <mat-label>Produit FR</mat-label>
+                            <mat-select>
+                                <mat-option value="GAG">GAG</mat-option>
+                                <mat-option value="SP">SP</mat-option>
+                                <mat-option value="SG">SG</mat-option>
+                                <mat-option value="JP">JP</mat-option>
+                                <mat-option value="JG">JG</mat-option>
+                                <mat-option value="...">...</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-3">
+                        <button mat-raised-button color="primary" (click)="addNewAttributaire()">Valider</button>
+                    </div>
+                </div>
+
+                <div class="mat-elevation-z8">
+                    <table mat-table [dataSource]="dataSource" matSort>
+
+                        <ng-container matColumnDef="code">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Code </th>
+                            <td mat-cell *matCellDef="let row"> {{row.code }} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="libelle">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Libelle </th>
+                            <td mat-cell *matCellDef="let row"> {{row.libelle}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="produitma">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Produit MA </th>
+                            <td mat-cell *matCellDef="let row"> {{row.produitma}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="produitfr">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Produit FR </th>
+                            <td mat-cell *matCellDef="let row"> {{row.produitfr}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="action">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
+                            <td mat-cell *matCellDef="let row">
+                                <button mat-icon-button>
+                                    <mat-icon>remove_red_eye</mat-icon>
+                                </button>
+                                <button mat-icon-button aria-label="Example icon-button with a heart icon">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                                <button mat-icon-button aria-label="Example icon-button with a heart icon">
+                                    <mat-icon>highlight_off</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                        </tr>
+                    </table>
+                    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                </div>
+                <br><br>
+            </app-card>
+        </div>
+    </div>

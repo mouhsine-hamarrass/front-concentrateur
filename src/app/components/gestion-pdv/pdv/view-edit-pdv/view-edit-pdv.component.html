@@ -1,0 +1,170 @@
+<mat-card class="example-card">
+    <mat-card-header>
+        <mat-card-title>Visualisation/Modification des PDVs</mat-card-title>
+        <mat-card-subtitle>Non modifiable jusqu'au click sur le boutton en bas</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="button-page">
+            <div class="row">
+                <div class="col-sm-12">
+                    <app-card [title]="''">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="sub-title">Visiu/Modif</div>
+                            </div>
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <mat-form-field>
+                                            <input matInput placeholder="Code" [disabled]="enableUpdate" value="R40">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <mat-form-field>
+                                            <input matInput placeholder="Désignation" [disabled]="enableUpdate"
+                                                value="Café_Agdal">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <mat-form-field>
+                                            <input matInput placeholder="Attributaire" [disabled]="enableUpdate"
+                                                value="AT020">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <mat-form-field>
+                                            <input matInput placeholder="numero" [disabled]="enableUpdate" value="7194">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <mat-form-field>
+                                            <input matInput placeholder="Ville" [disabled]="enableUpdate" value="Rabat">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <mat-form-field>
+                                            <input matInput placeholder="Type PDV" [disabled]="enableUpdate"
+                                                value="PDV">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <mat-form-field>
+                                            <input matInput placeholder="Agence Rattachement" [disabled]="enableUpdate"
+                                                value="AG01">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <mat-form-field>
+                                            <input matInput placeholder="Masque @IP" [disabled]="enableUpdate"
+                                                value="192.168.2.59/24">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <mat-radio-button color="primary" [checked]="prepaye == 'true'" [disabled]="enableUpdate">
+                                            Prépayé</mat-radio-button>
+                                        <mat-radio-button color="primary" [checked]="prepaye == 'false'" [disabled]="enableUpdate">
+                                            Postpayé</mat-radio-button>
+                                    </div>
+                                    <div class="col-md-3"></div>
+                                    <div class="col-md-3"></div>
+                                    <div class="col-md-3">
+                                        <div class="d-flex justify-content-end">
+                                            <div class="p-2">
+                                                <button mat-raised-button color="primary" (click)="miseAJourPDV()">
+                                                    <span *ngIf="enableUpdate">Mise à jour</span> <span
+                                                        *ngIf="!enableUpdate">Valider</span>
+                                                    <mat-icon *ngIf="enableUpdate">edit</mat-icon>
+                                                </button>&nbsp;
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+
+                                </div>
+                            </div>
+                        </div>
+                        <br><br><br>
+                    </app-card>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <app-card [title]="'Consultation'">
+                    <div class="row">
+                        <div class="col-sm-12">
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr class="text-uppercase">
+                                                    <th>Type</th>
+                                                    <th>Position</th>
+                                                    <th>@IP</th>
+                                                    <th>Préposé</th>
+                                                    <th>Password</th>
+                                                    <th>Auto.Paiment GL</th>
+                                                    <th>Auto.Création cpt Allo-Jeu</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>T2020</td>
+                                                    <td>01</td>
+                                                    <td>171.15.25.32</td>
+                                                    <td>71941</td>
+                                                    <td>********</td>
+                                                    <td>
+                                                        <button mat-icon-button>
+                                                            <mat-icon>thumb_up_alt</mat-icon>
+                                                        </button>
+                                                    </td>
+                                                    <td>
+                                                        <button mat-icon-button>
+                                                            <mat-icon>thumb_up_alt</mat-icon>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>T2026</td>
+                                                    <td>02</td>
+                                                    <td>171.15.25.33</td>
+                                                    <td>71942</td>
+                                                    <td>********</td>
+                                                    <td>
+                                                        <button mat-icon-button>
+                                                            <mat-icon>thumb_down_alt</mat-icon>
+                                                        </button>
+                                                    </td>
+                                                    <td>
+                                                        <button mat-icon-button>
+                                                            <mat-icon>thumb_down_alt</mat-icon>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </app-card>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>
+
+<div mat-dialog-actions style="float: right !important;">
+    <button mat-raised-button color="warn" (click)="onNoClick()">Annuler</button>
+    <button mat-raised-button color="primary" cdkFocusInitial (click)="ValidateAction()">Valider</button>
+</div>

@@ -1,0 +1,93 @@
+<div class="button-page">
+    <div class="row">
+        <div class="col-sm-12">
+            <app-card [title]="'Visualisation des versions autorisées'">
+                <mat-form-field>
+                    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+                </mat-form-field>
+
+                <button mat-raised-button color="primary" (click)="displayNewVersionAutorisee()" class="button-right">
+                    <span *ngIf="!newVersionAutoriseePanel">Nouveau</span>
+                    <mat-icon *ngIf="!newVersionAutoriseePanel">add_circle</mat-icon>
+                    <span *ngIf="newVersionAutoriseePanel">Annuler</span>
+                    <mat-icon *ngIf="newVersionAutoriseePanel">cancel</mat-icon>
+                </button>
+
+                <div class="container" *ngIf="newVersionAutoriseePanel">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <mat-form-field>
+                                <mat-label>Type Terminal</mat-label>
+                                <mat-select>
+                                    <mat-option value="2020">Terminal 2020</mat-option>
+                                    <mat-option value="2030">Terminal 2030</mat-option>
+                                    <mat-option value="2062">Terminal 2062</mat-option>
+                                    <mat-option value="PDA">PDA</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-3">
+                            <mat-form-field>
+                                <input matInput placeholder="derniére Version logiciel installée">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <button mat-raised-button color="primary" class="button-right" (click)="newVersionAutorisee()">
+                                Nouveau <mat-icon>add_circle</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mat-elevation-z8">
+                    <table mat-table [dataSource]="dataSource" matSort>
+
+                        <ng-container matColumnDef="ref">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> ref </th>
+                            <td mat-cell *matCellDef="let row"> {{ row.ref }} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="typeTerminal">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Type Terminal </th>
+                            <td mat-cell *matCellDef="let row"> {{ row.typeTerminal }} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="version">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Dernière version logicielle autorisée </th>
+                            <td mat-cell *matCellDef="let row"> {{ row.version }} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="date">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Date version </th>
+                            <td mat-cell *matCellDef="let row"> {{ row.date | date : 'dd/MM/yyyy' }}</td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="action">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
+                            <td mat-cell *matCellDef="let row">
+                                <button mat-mini-fab color="green" matTooltip="Visualiser">
+                                    <mat-icon>remove_red_eye</mat-icon>
+                                </button>
+                                <button mat-mini-fab color="green" matTooltip="Supprimer">
+                                    <mat-icon>edit</mat-icon>
+                                </button>
+                                <button mat-mini-fab color="green" matTooltip="Activer">
+                                    <mat-icon>cancel</mat-icon>
+                                </button>
+                                <button mat-mini-fab color="green" matTooltip="Suspendre">
+                                    <mat-icon>save_alt</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                        </tr>
+                    </table>
+                    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+                </div>
+                <br><br>
+            </app-card>
+        </div>
+    </div>
+</div>

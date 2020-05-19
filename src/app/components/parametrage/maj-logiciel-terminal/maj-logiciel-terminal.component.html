@@ -1,0 +1,33 @@
+<div class="button-page">
+    <div class="row">
+        <div class="col-sm-12">
+            <app-card [title]="'Mise à jour des terminaux'">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="sub-title">Choix</div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-6" style="text-align: center;">
+                                    <button mat-raised-button color="primary" class="mat-button-size" (click)="displayChargementversions()">
+                                        Chargement versions
+                                    </button>
+                                </div>
+                                <div class="col-md-6" style="text-align: center;">
+                                    <button mat-raised-button color="primary" class="mat-button-size" (click)="displayVersionAutorisee()">
+                                        Version autorisée
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+            </app-card>
+        </div>
+    </div>
+</div>
+
+<app-chargement-version *ngIf="changementVersion"></app-chargement-version>
+<app-version-autorisee *ngIf="versionAutorise"></app-version-autorisee>
